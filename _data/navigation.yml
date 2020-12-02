@@ -4,7 +4,11 @@
   key: overview
   url: /
 
-- title: Use cases
+- title: Architecture
+  key: architecture
+  url: /architecture
+
+- title: Use cases / Patterns
   key: usecases
   url: /usecases
   
