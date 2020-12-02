@@ -1,0 +1,28 @@
+<!-- Belongs at: /_includes/navigation.html -->
+
+<!-- This finds the current page so it can be highlighted. -->
+
+{% for entry in site.data.navigation %}
+{% capture fullurl %}{{ entry.url }}{% endcapture %}
+    {% if fullurl == page.url %}
+        {% assign current_page = fullurl %}
+        {% break %}
+    {% elsif page.url contains fullurl %}
+        {% assign current_page = fullurl %}
+    {% endif %}
+{% endfor %}
+
+<!-- Then we build the nav bar. -->
+<div style="background-color: #cccccc;">
+<nav>
+    <ul style="list-style: none; padding: 20px;">
+    {% for entry in site.data.navigation %}
+        {% if entry.url == current_page %}
+        <li{{ current }} style="display: inline; padding-right: 150px;"><b>{{ entry.title }}</b></li>
+        {% else %}
+        <li{{ current }} style="display: inline; padding-right: 150px;"><a href="{{ site.baseurl }}{{ entry.url }}">{{ entry.title }}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+</nav>
+</div>
