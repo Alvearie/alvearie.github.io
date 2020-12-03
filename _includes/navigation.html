@@ -18,9 +18,9 @@
     <ul style="list-style: none; padding: 20px;">
     {% for entry in site.data.navigation %}
         {% if entry.url == current_page %}
-        <li{{ current }} style="display: inline; padding-right: 150px;"><b>{{ entry.title }}</b></li>
+        <li{{ current }} style="display: inline; padding-right: 20px;"><b><nobr>{{ entry.title }}</nobr></b></li>
         {% else %}
-        <li{{ current }} style="display: inline; padding-right: 150px;"><a href="{{ site.baseurl }}{{ entry.url }}">{{ entry.title }}</a></li>
+        <li{{ current }} style="display: inline; padding-right: 20px;"><a href="{{ site.baseurl }}{{ entry.url }}"><nobr>{{ entry.title }}</nobr></a></li>
         {% endif %}
     {% endfor %}
     </ul>
