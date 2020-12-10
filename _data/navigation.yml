@@ -15,3 +15,11 @@
 - title: Services
   key: services
   url: /services
+
+- title: Blog
+  key: blog
+  url: /blog
+
+- title: Get Involved
+  key: getInvolved
+  url: /getInvolved
