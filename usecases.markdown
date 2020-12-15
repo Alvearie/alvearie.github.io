@@ -4,6 +4,4 @@
 
 layout: default
 ---
-{% include navigation.html %}
-
 {% include usecases.html %}

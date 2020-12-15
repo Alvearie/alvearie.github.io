@@ -13,61 +13,66 @@
 .learnmore:visited {
 	color: #ffffff;
 }
-.usecasecard {
-	background-color: #bbbbff;
-	padding-right: 10px; 
-	padding-left: 10px; 
-	padding-top: 10px; 
-	padding-bottom: 10px;
-	max-width: 600px;
+.card {
+	margin: 10px;
+	padding-right: 20px; 
+	padding-left: 20px; 
+	padding-top: 5px; 
+	padding-bottom: 20px; 
+	background-color: #dddddd;
+	font-family: Arial;
+	max-width: 400px;
+	min-height: 372px;
 }
-.patterncard {
-	background-color: #bbffbb;
-	padding-right: 10px; 
-	padding-left: 10px; 
-	padding-top: 10px; 
-	padding-bottom: 10px;
-	max-width: 600px;
-}
+
 </style>
 
-<table><tr><td valign=top>
-<center><h2>Use Cases</h2></center>
-	<div class="usecasecard">
-	<img src="/images/interopIcon.png" style="height: 100px; align: top;">
-	<span style="font-size: 26px; font-weight: bold;">Interoperability</span><br clear="left">
+<h2>Use Cases</h2>
+<table style="border: 0px solid black;"><tr>
+<td style="border: 0px solid black; padding: 0px;" valign=top>
+	<div class="card">
+	<center><img src="/images/interopIcon.png" style="height: 100px; align: top;"><br>
+	<span style="font-size: 26px; ">Interoperability</span></center>
+	<br clear="left">
 	<span>When healthcare data can be exchanged between disconnected systems, it's easier to draw the insights that feed innovative solutions for patient care, consumer experiences, clinical breakthroughs, and business efficiency. Join developers working to improve health data interoperability through projects focused on data ingestion, enrichment and more.</span>
 	<p></p>
 	</div>
 	<p></p>
+</td><td style="border: 0px solid black; padding: 0px;" valign=top>
 	
-	
-	<div class="usecasecard">
-	<img src="/images/xray-icon-13.jpg" style="height: 80px; align: top;">
-	<span style="font-size: 26px; font-weight: bold;">&nbsp;AI Imaging Clearing House</span><br clear="left">
+	<div class="card">
+	<center><img src="/images/clearingHouse.png" style="height: 100px; align: top;"><br>
+	<span style="font-size: 26px;">&nbsp;AI Imaging Clearing House</span></center>
+	<br clear="left">
 	<span>Need description.  Platform for ingestion of clinical and imaging data for patients which enables an AI workflow for radiologists</span>
 	<p></p>
 	</div>
+</td></tr></table>
 
-</td><td valign=top>
-<center><h2>Health Patterns</h2></center>
-	<div class="patterncard">
-	<img src="/images/ingestion.png" style="height: 100px; align: top; padding-left: 20px; padding-right: 20px;">
-	<span style="font-size: 26px; font-weight: bold;">Clinical Data Ingestion</span><br clear="left">
+<h2>Health Patterns</h2>
+<table style="border: 0px solid black;"><tr>
+<td style="border: 0px solid black; padding: 0px;" valign=top>
+	<div class="card">
+	<center><img src="/images/ingestion.png" style="height: 100px; align: top; padding-left: 20px; padding-right: 20px;"><br>
+	<span style="font-size: 26px;">Clinical Data Ingestion</span></center>
+	<br clear="left">
 	<span>This reference implementation will focus on the process of accepting data from a source system (EMR, Data Warehouse, etc), performing the necessary transformation & normalization and storing it in a persistence layer. Initial data formats supported will include HL7, FHIR and DICOM and this version will persist the data in an industry standard FHIR Server as well as the dcm4che image store.</span>
 	<p></p>
-	<center><a href="https://github.com/Alvearie/health-patterns/blob/main/docs/roadmap.md" target="_blank" class="learnmore"><nobr>Go to GitHub repository</nobr></a></center>
+	<center><a href="https://github.com/Alvearie/health-patterns/blob/main/docs/roadmap.md" target="_blank" class="learnmore"><nobr><img src="/images/githubWhiteIcon.png" height=15>&nbsp;&nbsp;Go to GitHub repository</nobr></a></center>
 	</div>
 	<p></p>
-	<div class="patterncard">
-	<img src="/images/enrichment.png" style="height: 100px; align: top; padding-left: 20px; padding-right: 20px;">
-	<span style="font-size: 26px; font-weight: bold;">Clinical Data Enrichment</span><br clear="left">
+</td><td style="border: 0px solid black; padding: 0px;" valign=top>
+	
+	<div class="card">
+	<center><img src="/images/enrichment.png" style="height: 100px; align: top; padding-left: 20px; padding-right: 20px;"><br>
+	<span style="font-size: 26px; ;">Clinical Data Enrichment</span></center>
+	<br clear="left">
 	<span>Enrichment of clinical data through the use of Natural Language Processing (NLP), de-identification, or other services.</span>
 	<p></p>
-	<center><a href="https://github.com/Alvearie/health-patterns/blob/main/docs/roadmap.md" target="_blank" class="learnmore"><nobr>Go to GitHub repository</nobr></a></center>
+	<center><a href="https://github.com/Alvearie/health-patterns/blob/main/docs/roadmap.md" target="_blank" class="learnmore"><nobr><img src="/images/githubWhiteIcon.png" height=15>&nbsp;&nbsp;Go to GitHub repository</nobr></a></center>
 	</div>
 	<p></p>
-
-
 </td></tr></table>
+
+
 </div>
