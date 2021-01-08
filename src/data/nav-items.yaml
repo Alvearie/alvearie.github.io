@@ -1,0 +1,16 @@
+- title: Architecture
+  pages:
+    - path: /architecture
+- title: Use Cases
+  pages:
+    - path: /useCases
+- title: Services
+  pages:
+    - path: /services
+- title: Blog
+  pages:
+    - path: /blog
+- title: Get Involved
+  pages:
+    - path: /contributions
+

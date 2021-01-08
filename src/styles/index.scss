@@ -1,0 +1,27 @@
+// This is where your application styles could go.
+
+[class*='bx--article-card__tile'] {
+  padding: var(--cds-spacing-05, 1rem) 5% var(--cds-spacing-05, 1rem) var(--cds-spacing-05, 1rem);
+}
+[class*='bx--resource-card'] {
+  padding: auto;
+}
+[class*='bx--tile'] {
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+	padding: 1rem;
+}
+[class*='gatsby-resp-image-wrapper'] {
+	margin-left: auto !important;
+}
+[class*='gatsby-resp-image-image'] {
+	height: auto !important;
+	width: auto !important;
+}
+[class*='Markdown-module--paragraph'] {
+	width: 90%;
+}
+[class*='bx--resource-card__icon--img'] {
+	bottom: 4px;
+}
