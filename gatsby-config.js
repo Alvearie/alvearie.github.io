@@ -22,4 +22,5 @@ module.exports = {
     `gatsby-plugin-sharp`,
     { resolve: `gatsby-source-filesystem`, options: { path: `./src/` } },
   ],
+
 };
