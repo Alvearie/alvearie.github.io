@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "gatsby develop -H 0.0.0.0",
     "dev:clean": "yarn clean && yarn dev",
-    "build": "gatsby build && gh-pages -d public",
+    "build": "gatsby build",
     "ghpages": "gh-pages -d public",
     "build:clean": "yarn clean && gatsby build",
     "serve": "gatsby serve",
