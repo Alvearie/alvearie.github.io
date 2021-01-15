@@ -1,12 +1,13 @@
 import React from 'react';
 import { HomepageBanner} from 'gatsby-theme-carbon';
 import HomepageTemplate from 'gatsby-theme-carbon/src/templates/Homepage';
+import homepageStyles from "./Homepage.module.scss"
 
-import bg from '../../images/TempBackground.jpg';
+import bg from '../../images/landingPage/bg_hero-landing-page.jpg';
 
 
 
-const BannerText = () => <h2>An open source project to enable <b>healthcare innovation</b></h2>;
+const BannerText = () => <span className={homepageStyles.title}>An open source project<br/>designed to enable<br/><span className={homepageStyles.titleBold}>healthcare innovation</span></span>;
 
 const customProps = {
   Banner: <HomepageBanner renderText={BannerText} image={bg} />,
