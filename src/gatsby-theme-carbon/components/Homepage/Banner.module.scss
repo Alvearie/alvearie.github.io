@@ -1,0 +1,29 @@
+.column {
+  @include carbon--type-style('display-01');
+  color: $carbon--white-0;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  margin-top: 100px;
+  height: 100%;
+}
+
+.row {
+  height: 100%;
+}
+
+.row h1 {
+  padding: 1rem 0;
+}
+.grid {
+  background-size: auto;
+  background-position: left top !important;
+  height: 660px;
+  max-height: 660px;
+  width: 100%;
+  max-width: 100%;
+
+  @include carbon--breakpoint('lg') {
+    padding-left: 256px;
+  }
+}

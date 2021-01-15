@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="14px" viewBox="0 0 17 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/navigation/arrow/right/20</title>
+    <defs>
+        <polygon id="path-1" points="11.25 3.75 10.36875 4.63125 15.10625 9.375 1.875 9.375 1.875 10.625 15.10625 10.625 10.36875 15.36875 11.25 16.25 17.5 10"></polygon>
+    </defs>
+    <g id="Home-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home-page_hi-fi_v2" transform="translate(-894.000000, -111.000000)">
+            <g id="hero" transform="translate(0.000000, 46.000000)">
+                <g id="Group-3" transform="translate(46.000000, 0.000000)">
+                    <g id="icon/navigation/arrow/right/20" transform="translate(847.000000, 62.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="icon-color" fill="#FFFFFF" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

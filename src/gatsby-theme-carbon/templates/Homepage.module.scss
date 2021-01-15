@@ -4,3 +4,10 @@
   position: relative;
   top: $spacing-06; //margin-top doesn't work on table-cell, and padding-top looks weird on focus
 }
+.titleBold {
+	font-weight: bold;
+}
+.title {
+	font-size: 36px;
+	line-height: 1.6;
+}
