@@ -4,6 +4,7 @@ module.exports = {
     description: "An open source project to enable healthcare innovation",
     keywords: "alvearie, open source, health, healthcare",
   },
+  
   plugins: [
     {
       resolve: "gatsby-plugin-manifest",
@@ -24,3 +25,6 @@ module.exports = {
   ],
 
 };
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
