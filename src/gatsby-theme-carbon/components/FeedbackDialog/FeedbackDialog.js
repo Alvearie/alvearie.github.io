@@ -7,28 +7,12 @@ const FeedbackDialog = ({ props }) => {
   const onSubmit = data => {
     console.log('Submitting feedback');
     console.log('ENDPOINT: ' + API_ENDPOINT);
-    var comment = 'No comment';
-    if (data.comment.length > 0) {
-	    comment = data.comment;
-	}
-	const emoji = data.experience === 'Negative'
-      ? ':disappointed:'
-      : data.experience === 'Neutral'
-      ? ':neutral_face:'
-      : ':grinning:';
-      
-    const text = emoji + " " + data.experience + ": " + comment
-	
-    const body = {
-    	"text": text
-    };
-    console.log('body: ' + JSON.stringify(body));
-    
+    console.log('data: ' + JSON.stringify(data)); 
     fetch(API_ENDPOINT, {
-      method: 'POST',
-      body: JSON.stringify(body),
-    });
-  }
+      method: 'POST', 
+      body: JSON.stringify(data),
+    }).then(res => {console.log(res.status);});
+   };
 
   return <ThemeFeedbackDialog {...props} onSubmit={onSubmit} />;
 };
