@@ -1,31 +1,35 @@
-# Gatsby Theme Carbon Starter
+# Alvearie Website
 
-## What is this?
+The Alvearie website is built with the Gatsby framework.
 
-> Gatsby [themes](https://www.gatsbyjs.org/docs/themes/) encapsulate all of the
-> configuration and implementation details of Gatsby websites. This is a
-> starter-kit (boilerplate) with a dependancy on the `gatsby-theme-carbon`
-> package. The primary goal of `gatsby-theme-carbon` is to get content authors
-> speaking the IBM Design Language with Carbon as soon as possible. It includes
-> some sample components/content demos in the `src/pages` directory.
+## Development setup
 
-## How do I use it?
+To develop locally, pull down a local copy of the alvearie.github.io repository from GitHub.  Using an IDE such as eclipse
+is an ideal environment for development.  The source code for the website is in the *main* branch, and the production files 
+are located in the *gh-pages* branch.
 
-Check out our quick
-[getting started](https://gatsby-theme-carbon.now.sh/getting-started) guide and
-video!
+Install the Gatsby theme and it's dependencies by following the guide here: https://gatsby-theme-carbon.now.sh/getting-started/
 
-`gatsby-theme-carbon` at it’s core relies on [mdx](https://mdxjs.com/) for page
-creation. Check out the `src/pages` directory for some examples for using mdx.
+## Building the website
 
-A key feature of Gatsby themes is component shadowing. By simply placing a
-component into the `src/gatsby-theme-carbon/components` location, you can
-override components used by the theme. You can read more about component
-shadowing
-[here](https://www.gatsbyjs.org/docs/themes/api-reference#component-shadowing).
+To build the website from the command line for local testing, issue the following command:
 
-You’re also free to make your own components and use them in your MDX pages.
+> npm run dev
 
-## What’s Next?
+This will build the website from the source files and deploy it locally.  You can view the website locally by going 
+to: https://localhost:8000/
 
-[Check out the docs!](https://gatsby-theme-carbon.now.sh)
+To build the website for publishing to GitHub, issue the following command:
+
+> npm run build
+
+This will build all the files needed for deploying to GitHub Pages and copy them to the /public folder.  After the build has 
+been successfully completed and tested, the changes can be pushed to GitHub through a pull request.  Once the changes are merged 
+into the main branch, one final command needs to be run to transfer the files to the gh-pages branch:
+
+> git subtree push --prefix public origin gh-pages
+
+After that command completes, the gh-pages branch in GitHub will be updated with the changed files and will automatically be 
+pushed to the GitHub Pages website after a minute or two.
+
+
