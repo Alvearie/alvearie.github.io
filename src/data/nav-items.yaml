@@ -1,12 +1,12 @@
 - title: Architecture
   pages:
     - path: /architecture
-- title: Use Cases
+- title: Components
   pages:
-    - path: /useCases
-- title: Services
+    - path: /components
+- title: Health Patterns
   pages:
-    - path: /services
+    - path: /patterns
 - title: Blog
   pages:
     - path: /blog
