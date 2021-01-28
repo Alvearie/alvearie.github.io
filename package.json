@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "gatsby develop -H 0.0.0.0",
     "dev:clean": "yarn clean && yarn dev",
-    "build": "gatsby build",
+    "build": "gatsby build && xcopy \"public\" \"docs\" /s /i /y /q",
+    "copyOutput": "xcopy \"public\" \"docs\" /s /i /y /q",
     "ghpages": "gh-pages -d public",
     "build:clean": "yarn clean && gatsby build",
     "serve": "gatsby serve",
@@ -22,6 +23,7 @@
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "gh-pages": "^3.1.0"
+    "gh-pages": "^3.1.0",
+    "rsync": "^0.6.1"
   }
 }
