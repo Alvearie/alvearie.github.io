@@ -2,6 +2,7 @@
 title: Using Open Source to Build a Healthcare Record Ingestion Pattern
 description: Clinical Ingestion Blog
 ---
+By Luis A. Garcia &nbsp;&nbsp; | &nbsp;&nbsp; Published February 9, 2021
 
 ### Introduction
 
@@ -44,7 +45,7 @@ reporting and metrics should be maintained throughout the process.
 
 In general, processing healthcare records falls within the realm of what is known as data integration, which is the process of 
 combining data from different sources and providing users a unified view of said data. Data integration use cases may involve 
-non-engineering teams, therefore it is a design consideration of the pattern covered in this post, to provide non-engineering 
+non-engineering teams, therefore it is a design consideration of the pattern covered in this post to provide non-engineering 
 teams with a simple way to extend and modify the data flows.
  
 ### Clinical Data Ingestion Pattern
@@ -70,7 +71,7 @@ as a utility. These modular process groups in NiFi are stored and managed in a *
 version control and sharing of NiFi process groups, and it is backed by a Github repository where a team can be continuously 
 delivering process group updates or new process groups to be consumed by a NiFi server user. The NiFi Registry is the second 
 element of this pattern, and it is used to deliver the various NiFi processors used by the ingestion pattern. You can think 
-of the NiFi canvas and NiFi Registry respectively as a big user-friendly empty LEGO board and a bag of working LEGO pieces 
+of the NiFi canvas and NiFi Registry respectively as a big user-friendly empty LEGO&copy; board and a bag of working LEGO&copy; pieces 
 that you will use to build structures on your board.
 
 Now, in order to get data flowing in and out of the data pipeline we need a mechanism that allows for processing of the 
@@ -90,7 +91,7 @@ Clinical data that is posted to the Ingestion Pattern typically needs to be proc
   - Data Validation: Ensuring that the clinical data being ingested adheres to some conventions, standards or schemas. For instance, ensure the patient clinical data being ingested adheres to the FHIR US Core Profile.
   - Data Transformation: Transforming the clinical data into a different format or fixing any validation errors by ensuring the failing fields adhere to the expected schemas. For instance, transforming clinical data in HL7 v3 format to FHIR, or adjusting a field to match some desired FHIR profile.
   - Data Enrichment: Processing the incoming clinical data with the purpose of enriching it with more data, or metadata, that will be useful for some consumers. For instance, running some natural language processor over patient clinical notes to try to discover new clinical information.
-  - Data De-Identification: A very specific form of data transformation that removes any personable identifiable elements from clinical records.
+  - Data De-Identification: A very specific form of data transformation that removes any personally identifiable elements from clinical records.
 
 The Ingestion Pattern includes pre-defined spots where one or more of these processing steps can be plugged in. It also includes 
 a configuration mechanism to specify, on a per record basis, exactly which operations from the available processing steps to 
@@ -123,7 +124,7 @@ The following simple steps are necessary in order to run the Alvearie Clinical I
 	
 2.	Optionally create a new namespace in your Kubernetes Cluster. <br/>
 	It is recommended, though not required, that you create a namespace before installing the chart in order to prevent the various 
-	artifacts it will install  from mixing with the rest of the artifacts in your Kubernetes cluster, in an effort to make management 
+	artifacts it will install from mixing with the rest of the artifacts in your Kubernetes cluster, in an effort to make management 
 	easier.<br/>
 	`kubectl create namespace alvearie`<br/>
 	`kubectl config set-context --current --namespace=alvearie`
@@ -162,7 +163,7 @@ or outputs, change the URLs to some of the other services, etc.
 The Ingestion Pattern exposes a Kafka broker that can be used to feed clinical data into the pattern, but before pushing the 
 data in, let's create some synthetic clinical data to push. Synthetic patient data can be generated using the 
 **Synthea Patient Generator**. Download Synthea and run the following command (for more information on Synthea visit their 
-Github page):
+[Github page](https://github.com/synthetichealth/synthea)):
 
    `java -jar synthea-with-dependencies.jar -p 10`
 
@@ -220,4 +221,6 @@ can be modified using the corresponding Helm deployment properties in order to m
 and security requirements of a production grade deployment. 
 
 
-
+<p/>
+<p/>
+<p/>
