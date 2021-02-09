@@ -1,0 +1,223 @@
+---
+title: Using Open Source to Build a Healthcare Record Ingestion Pattern
+description: Clinical Ingestion Blog
+---
+
+### Introduction
+
+The increasing digitization of healthcare records has made it more important to have a set of technologies and infrastructure 
+that enable healthcare organizations to effectively create, store, transform, exchange, and consume these records. This post 
+demonstrates how it is possible to build a reference implementation for processing healthcare records that addresses several 
+common use cases, using only open source technologies.
+
+This post introduces the Alvearie Clinical Ingestion Pattern, a reference implementation to ingest, process and store clinical records 
+using existing healthcare record standards. The framework fulfills several design considerations that will be outlined in the 
+next section and that can be extended to implement typical healthcare record use cases. It is built using open source technologies 
+and a Helm Chart is provided in order to facilitate its deployment on a Kubernetes cluster, running potentially on any public or 
+private cloud.
+
+### Design Considerations
+
+As healthcare records have become more digitized, there have been several steps made in the right direction to facilitate 
+working with those records and some fundamental problems have already been solved. For example, the previously disparate 
+set of data representation formats used by the various healthcare organizations made it harder to interoperate, however 
+more organizations agree on a standard way to represent and exchange these healthcare records as a result of [Health 
+Level Seven International (HL7)](https://www.hl7.org) creating the [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/implement/standards/product_brief.cfm?product_id=491)
+ specification. While agreeing on a standard for exchanging data is crucial to creating a healthcare records processing 
+ pipeline, it is only step one. In this section we try to discuss and solve some of additional aspects needed in order
+ to process healthcare records effectively.
+ 
+There are several non-functional characteristics that need to be considered in order to build a true healthcare records 
+processing pattern that will be able to meet the challenges of the modern healthcare organization. Those characteristics include:
+  -	Cloud based: It should be a native cloud application with all the benefits that entails. 
+  -	Extensible: It should be possible for users to extend it to accomplish additional use cases on top of the basic functionality provided by the pattern. 
+  -	Flexible: It should be possible for users to modify comprising elements of the pattern and replace them with elements deemed better suited for the users' purposes, i.e. a "bring your own" (BYO) service model. 
+  -	Open: It should not create vendor lock-in on any given cloud or technology, in other words it should be a multi-cloud application.
+  -	Scalable: It should scale as necessary to meet the user's data performance and throughput needs.
+
+From a functional perspective, a healthcare records processing pattern needs to allow its users to input healthcare records of 
+multiple kinds using some of the more commonly used formats, e.g. FHIR v4 and HL7 v3. The mechanism to accept records should 
+allow for high throughput and the records should be persisted for traceability purposes. Multiple input modalities may be useful, 
+for instance input via a messaging framework and over HTTP. The records should flow through an ingestion pipeline that would 
+normalize the data, validate it, potentially transform it and ultimately store it. Appropriate logging, resiliency, error 
+reporting and metrics should be maintained throughout the process.
+
+In general, processing healthcare records falls within the realm of what is known as data integration, which is the process of 
+combining data from different sources and providing users a unified view of said data. Data integration use cases may involve 
+non-engineering teams, therefore it is a design consideration of the pattern covered in this post, to provide non-engineering 
+teams with a simple way to extend and modify the data flows.
+ 
+### Clinical Data Ingestion Pattern
+
+The entire pattern is built using open source technologies, and if needed it could be expanded in functionality and scope 
+using other components, proprietary or open source. The following open source technologies are used in the framework:
+  - [Apache NiFi](https://nifi.apache.org/) is a platform for automating and managing the flow of data between disparate systems. 
+  - [Apache NiFi Registry](https://nifi.apache.org/registry.html) is a complementary application that provides a central location for storage and management of shared resources across one or more instances of Apache NiFi. 
+  - [Apache Kafka](https://kafka.apache.org/) is a distributed streaming platform for publishing, subscribing, storing and processing streams of records.
+  - [IBM FHIR Server](https://github.com/IBM/FHIR) is a modular Java implementation of version 4 of the HL7 FHIR specification with a focus on performance and configurability.
+  - [Prometheus](https://prometheus.io/) is an open source monitoring and alerting tool that is widely adopted across many enterprises, that monitors targets by scraping or pulling metrics from endpoints and stores the metrics in a time series database.
+  - [Grafana](https://grafana.com/) is an open source tool for data visualization and monitoring. Data sources such as Prometheus can be added to Grafana for metrics collection. It includes powerful visualization capabilities for graphs, tables, and heatmaps. 
+
+The foundation of the pattern is **Apache NiFi**. Apache NiFi provides a graphical user interface in the form of a canvas for data 
+integrators to build data processing workflows using what are known as "processors". NiFi comes out of the box with multiple 
+processors that allow for data input and output to and from various sources, and for transforming the data into multiple data 
+formats. Processors are linked together in such a way that the output of one becomes the input to the other, and it is in this 
+manner that processor groups of increasing complexity can be built.
+
+Once a sufficiently complex and functional group of processors that achieves a specific purpose is built, it can typically be 
+managed independently. Think of it as how a class, a method or a function can be abstracted out in code and managed independently 
+as a utility. These modular process groups in NiFi are stored and managed in a **NiFi Registry**. The NiFi Registry allows for 
+version control and sharing of NiFi process groups, and it is backed by a Github repository where a team can be continuously 
+delivering process group updates or new process groups to be consumed by a NiFi server user. The NiFi Registry is the second 
+element of this pattern, and it is used to deliver the various NiFi processors used by the ingestion pattern. You can think 
+of the NiFi canvas and NiFi Registry respectively as a big user-friendly empty LEGO board and a bag of working LEGO pieces 
+that you will use to build structures on your board.
+
+Now, in order to get data flowing in and out of the data pipeline we need a mechanism that allows for processing of the 
+data flowing through the pipeline in a way that is: 
+
+  - Continuous, such that users don't need to wait for the pipeline to finish processing some previous data before they can submit new data 
+  - Asynchronous, such that users don't need to wait synchronously for data to be fully processed since processing of data will likely take time
+  - Reliable, such that users know that once the data has been accepted it will be processed and not lost
+  - Durable, such that users can keep track of the raw data they have submitted into the pipeline for traceability purposes as long as necessary. 
+
+**Apache Kafka** is an open source events stream framework that addresses these characteristics. The ingestion pattern connects to 
+a Kafka topic, which is just a message queue, listening for clinical data posted there, so that when data appears, it gets 
+picked up by the framework and ingested. While posting to a Kafka topic is the main data input method, the Ingestion 
+Pattern also accepts data via a conventional REST API.
+
+Clinical data that is posted to the Ingestion Pattern typically needs to be processed in various ways. Processing may include:
+  - Data Validation: Ensuring that the clinical data being ingested adheres to some conventions, standards or schemas. For instance, ensure the patient clinical data being ingested adheres to the FHIR US Core Profile.
+  - Data Transformation: Transforming the clinical data into a different format or fixing any validation errors by ensuring the failing fields adhere to the expected schemas. For instance, transforming clinical data in HL7 v3 format to FHIR, or adjusting a field to match some desired FHIR profile.
+  - Data Enrichment: Processing the incoming clinical data with the purpose of enriching it with more data, or metadata, that will be useful for some consumers. For instance, running some natural language processor over patient clinical notes to try to discover new clinical information.
+  - Data De-Identification: A very specific form of data transformation that removes any personable identifiable elements from clinical records.
+
+The Ingestion Pattern includes pre-defined spots where one or more of these processing steps can be plugged in. It also includes 
+a configuration mechanism to specify, on a per record basis, exactly which operations from the available processing steps to 
+run. The pattern includes default implementations for some of these processors, but those can be replaced or complemented with 
+others that can be plugged in to satisfy different user needs.
+
+After the clinical data has been processed, it may need to be persisted. The standard for persisting clinical data is using a 
+FHIR server. The Ingestion Pattern includes the **IBM FHIR Server** setup out of the box, which serves as the default target for 
+ingested data. That FHIR server is exposed outside the pattern where clinical data consumers can access it using the FHIR Server 
+REST APIs.
+
+The Ingestion Pattern includes some default activity monitoring for records that have been put through via **Prometheus** monitors 
+over its existing components, as well as processor and memory usage of some of its components. It also includes monitors over the 
+actual Kubernetes cluster where the pattern is running. All monitoring information can be visualized using the included **Grafana** 
+instance.
+ 
+### Installation
+
+The instructions here assume that you have a working Kubernetes Cluster 1.10+ with Helm 3.0+.
+
+The multiple components of the Ingestion Pattern can be deployed in a single step on a **Kubernetes** Cluster using the
+ Alvearie Ingestion **Helm** chart. The chart performs all the steps necessary to deploy the Ingestion Pattern, ensure that 
+ there is connectivity between its various elements, set up the NiFi canvas with the corresponding processors, and initialize 
+ the necessary components. This greatly simplifies the startup process.
+ 
+The following simple steps are necessary in order to run the Alvearie Clinical Ingestion Pattern:
+1.	Check out the code<br/>
+	`git clone https://github.com/Alvearie/health-patterns.git`<br/>
+	`cd clinical-ingestion/helm-charts/alvearie-ingestion`
+	
+2.	Optionally create a new namespace in your Kubernetes Cluster. <br/>
+	It is recommended, though not required, that you create a namespace before installing the chart in order to prevent the various 
+	artifacts it will install  from mixing with the rest of the artifacts in your Kubernetes cluster, in an effort to make management 
+	easier.<br/>
+	`kubectl create namespace alvearie`<br/>
+	`kubectl config set-context --current --namespace=alvearie`
+3.	Install the helm chart with a release name ingestion:<br/>
+	`helm install ingestion .`
+
+After running the commands above, you will see that all the corresponding elements of the Ingestion Pattern will start to be 
+laid out, and eventually all the Kubernetes resources will be up and running:
+ 
+![Screen Shot](BlogSS001.png)
+
+Architecturally, that helm install has deployed the following:
+
+![Ingestion Architecture](BlogArch.png)
+ 
+### Using the Ingestion Pattern
+ 
+By default, there are four external services exposed by the Alvearie Clinical Ingestion Pattern: 
+NiFi, Kafka, FHIR, and Grafana. Let's go through them one by one along with their corresponding functionality. 
+
+To obtain the external IP for each of the exposed services run the following command:
+
+   `kubectl get services | grep LoadBalancer`
+
+Note the result of this command also includes the corresponding ports where the services are available, but the default 
+ports are also specified here for simplicity.
+
+Let's start with the *ingestion-nifi* service: [http://{nifi-external-ip}:8080/nifi](http://{nifi-external-ip}:8080/nifi)
+
+![Nifi Screen Shot](NifiSS001.png)
+
+The NiFi canvas will show a pre-configured main process group called "Clinical Ingestion," which is the entry point to the 
+Ingestion Pattern's NiFi components. From here you can add, remove or modify ingestion processing elements, add new inputs 
+or outputs, change the URLs to some of the other services, etc.
+
+The Ingestion Pattern exposes a Kafka broker that can be used to feed clinical data into the pattern, but before pushing the 
+data in, let's create some synthetic clinical data to push. Synthetic patient data can be generated using the 
+**Synthea Patient Generator**. Download Synthea and run the following command (for more information on Synthea visit their 
+Github page):
+
+   `java -jar synthea-with-dependencies.jar -p 10`
+
+The previous command will have created FHIR bundles for 10 patients with their clinical history and their corresponding medical providers.
+
+Now that we have some test clinical data, let's ingest it. It's not necessary for you to install Kafka; if you have 
+**Docker** installed you can run a container that has a Kafka producer as follows. From the list of services grab the 
+external IP for the service called ingestion-kafka-0-external. This will be the address of your Kafka broker. With that, 
+run the following commands:
+
+  `docker run -it --rm bitnami/kafka:latest kafka-console-producer.bat --broker-list {kafka-external-ip}:9094 --topic ingestion`
+  
+After running the previous command (the first time you run it, it may take a minute to download the corresponding Docker 
+image), you will get the prompt for the Alvearie Clinical Ingestion Pattern Kafka topic:
+
+![Kafka Screen Shot](KafkaSS001.png)
+
+The prompt accepts a patient per line, so on a different terminal, remove all new lines from one of your synthetic 
+patients using the command below and paste the patient on the Kafka prompt:
+
+`tr -d '\r?\n' < patient.json > patient-single-line.json `
+
+If you don't have Docker installed, you can also post the patient using the pattern's REST API by running the following command:
+
+`curl -X POST -d @patient.json http://{nifi-external-ip}:7001/fhirResource`
+
+After posting the patient either through Kafka or via HTTP, the patient will eventually be persisted in the FHIR server. 
+From the list of services, grab the external IP for the service called ingestion-fhir. This will be the address of your 
+FHIR server. 
+
+You can then query the list of FHIR resources using your browser or an HTTP client. For instance, for querying patients 
+you would do: [http://{fhir-external-ip}:80/fhir-server/api/v4/Patient?_format=json](http://{fhir-external-ip}:80/fhir-server/api/v4/Patient?_format=json) *(default credentials: fhiruser/integrati0n)*
+
+![FHIR Screen Shot](FhirSS001.png)
+
+Finally, from the list of services grab the external IP for the service called ingestion-grafana. 
+This will be the address of your Grafana server. With it, navigate 
+to [http://{grafana-external-ip}](http://{grafana-external-ip}) *(default credentials admin/admin)*.
+
+![Grafana Screen Shot](GrafanaSS001.png)
+
+### Conclusion
+
+The Alvearie Clinical Ingestion Pattern is not currently meant to be ready for production use out of the box, it is more of an 
+implementation of a Reference Design, that can evolve into a reference implementation for production use. Still, an effective 
+pattern for efficient clinical data ingestion enables advanced analytics and opens the door to a number of important 
+healthcare use cases, including:
+  - Evaluating and improving the quality of care in patient populations
+  - Analyzing quality measures against federal regulations and guidelines
+  - Accelerating time-to-insight from data that supports clinical decision-making, pharmaceutical research, and more
+  
+The Alvearie Clinical Ingestion Pattern is fully open source and it's built using open source technology, including the 
+corresponding Helm charts needed to put it together and deploy it. Each of the subcomponents that comprise the pattern 
+can be modified using the corresponding Helm deployment properties in order to meet the persistence, availability, scalability 
+and security requirements of a production grade deployment. 
+
+
+
