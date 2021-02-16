@@ -23,7 +23,8 @@ Our ultimate goal is for Alvearie to be cloud agnostic. To achieve that, we'll b
 
 **Common Services**
 
-This layer will include important features that most organizations need for managing health data. These services will include auditing, logging, security management and other services shared across each stage of Alvearie. 
+This layer will include important features that most organizations need for managing health data. These services will include auditing, 
+logging, security management, data quality and lineage and other services shared across each stage of Alvearie. 
 
 
 ### Data Integration and Ingestion Architecture 
@@ -37,7 +38,7 @@ The data integration stage will be the starting point for any data coming into A
 format like FHIR or DICOM. This stage will provide a single front door for incoming data and will transform raw data into standard 
 formats that can be used by Alvearie. Key components include:
 
-  - **Linux for Health:** [Linux for Health](https://linuxforhealth.github.io/docs/) is an operating system that can be run where the data is stored, either on-premises or in the cloud, and used to export the data into Alvearie.
+  - **Linux for Health Connect:** [Linux for Health](https://linuxforhealth.github.io/docs/) is an operating system that can be run where the data is stored, either on-premises or in the cloud, and used to export the data into Alvearie.
 
   - **Intelligent Data as a Service:** This [open source framework](https://connectedhealth-idaas.io/) for integrating health data from Red Hat will complement Alvearie by making it easier for health care systems to integrate with the Alvearie environment.
 
@@ -60,7 +61,7 @@ process and distribute large quantities of data. The components for this stage i
 
   - **Patient and provider matching:** This component will identify unique patient and provider records so that duplicate records can be merged or linked.
 
-  - [De-identification](https://github.com/Alvearie/de-identification): Data that is de-identified is very valuable for conducting research or tracking performance with analytics. With this component, records can be de-identified then stored in a database for other tools to access it.
+  - [Data De-identification](https://github.com/Alvearie/de-identification): Data that is de-identified is very valuable for conducting research or tracking performance with analytics. With this component, records can be de-identified then stored in a database for other tools to access it.
 
 
 ### Data Persistence, Access and Analytics Architecture
@@ -96,7 +97,7 @@ external applications connect with Alvearie to retrieve the standardized data. T
 
 Often, additional steps need to be taken to prepare data for analytics and research. This stage in Alvearie will offer services and components that can make the standardized data usable for artificial intelligence (AI) applications, creating patient cohorts and other healthcare-specific use cases. The analytics components include:
 
-  - [Measure and cohort evaluation service](https://alvearie.github.io/quality-measure-and-cohort-service/): This service will provide the ability for patient cohorts to be defined and retrieved using Clinical Quality Language. This service will be valuable for researchers and healthcare leaders who want to learn more about specific patient populations.
+  - [Cohort & Quality Measure service](https://alvearie.github.io/quality-measure-and-cohort-service/): This service will provide the ability for patient cohorts to be defined and retrieved using Clinical Quality Language. This service will be valuable for researchers and healthcare leaders who want to learn more about specific patient populations.
 
   - [Kubeflow](https://www.kubeflow.org/): This open source project provides a portable way to deploy machine learning workflows on kubernetes. 
 
