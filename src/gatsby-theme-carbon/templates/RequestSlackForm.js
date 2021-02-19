@@ -24,6 +24,7 @@ class RequestSlackForm extends React.Component {
     data.components = components;
     
     console.log("Body: " + JSON.stringify(data));
+    console.log("ENDPOINT: " + API_ENDPOINT);
     fetch(API_ENDPOINT, {
       method: 'POST', 
       body: JSON.stringify(data)
