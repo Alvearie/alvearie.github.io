@@ -5,9 +5,6 @@ const API_ENDPOINT = process.env.FEEDBACK_API_ENDPOINT;
 
 const FeedbackDialog = ({ props }) => {
   const onSubmit = data => {
-    console.log('Submitting feedback');
-    console.log('ENDPOINT: ' + API_ENDPOINT);
-    console.log('data: ' + JSON.stringify(data)); 
     fetch(API_ENDPOINT, {
       method: 'POST', 
       body: JSON.stringify(data),
