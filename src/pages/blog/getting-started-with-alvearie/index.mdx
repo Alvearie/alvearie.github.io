@@ -1,0 +1,135 @@
+---
+title: Getting Started with Project Alvearie
+description: Getting Started with Project Alvearie
+---
+By David Ranum &nbsp;&nbsp; | &nbsp;&nbsp; Published March 8, 2021
+
+### What can you do right now!
+
+No matter who you are or what you do, everyone has an interest in healthcare. Whether you are a provider, a payer, a 
+patient, a researcher, or some other important part of the complex healthcare web, the way that healthcare is managed 
+and delivered matters to you. Simply put, you care about the way healthcare happens.  
+
+In this day and age where technology is pervasive across almost every aspect of daily life, one of the most important drivers 
+for healthcare offerings is the availability and usability of data. In particular, data that is complete, accurate, consistent 
+across sources, and can be used to make healthcare better.  
+
+In a [previous post](https://developer.ibm.com/components/kafka/blogs/4-reasons-to-join-project-alvearie-ibms-open-source-healthcare-effort/), 
+Project Alvearie is described as a new open-source project that "seeks to help healthcare technology 
+professionals unlock and effectively use healthcare data to solve some of the biggest challenges in healthcare." If you are 
+browsing through the Project Alvearie site, looking at the resources, visiting this blog and reading the posts, then it is 
+likely that you have the interest and passion that we are looking for in users and collaborators.  
+
+The only thing missing perhaps is a hint or idea about how to get started.  Even though Project Alvearie is new, it already 
+has a number of resources for you to explore and opportunities for you to get involved. So, what are some things that **you can 
+do right now**? That might depend a little on who you are and what your interests are, so let's try to describe a few possibilities 
+and jump-start your involvement.
+
+### Everyone can get involved
+
+One of the best ways to get started is to do what you are doing now-read and explore the resources that Project Alvearie 
+has to offer. Start with the main Alvearie page ([https://alvearie.github.io](https://alvearie.github.io)) and read through the 
+introductory descriptions and rationale. Is the project well-defined? Are the purpose and description clear? Are you able to 
+understand the basic objectives? Move on to explore the architecture and components of the project.  Read the documentation 
+related to each. Is it clear? Does it answer your questions?  
+
+The goal of these pages is to provide an overview of the project and provide a launching point to learn more about the overall 
+focus and design as well as to detail the individual parts of Alvearie. Often, we think that contributing to an open-source 
+project is only for the original developers; the coders. But that is simply not true. There is plenty of creative work to present 
+the project in a way that is inviting and useful for those who are coming to explore and use the resources.  
+
+As you are getting deeper and deeper into the various pages and repositories, if you find documentation that is not complete or 
+seems a bit inconsistent or lacking, propose an issue that describes the problem and how it could be improved. Or, if you are just 
+getting started and find a mistake such as a typo or some other simple error, how about contributing a fix?  
+
+No matter who you are, contributing to the project at any level starts here. Request access and join our Slack channels, follow 
+discussions and issue boards, and in general become part of the community. These are things **you can do right now**!
+
+### Interested in data ingestion?
+
+If you have an interest in healthcare-related data, perhaps as a data producer or consumer, data scientist, or related to some 
+other data integration tasks, then using tools and techniques that allow access, transformation, enhancement, and storage of 
+data are fundamental to your success. One of the best places to start exploring is to experiment with the 
+[Alvearie Clinical Ingestion Pattern](https://github.com/Alvearie/health-patterns/blob/main/docs/roadmap.md#1-clinical-data-ingestion).  
+You will find descriptions and details of this pattern in a [previous blog post](/blog/clinical-records-ingestion-pattern), as well as in 
+source code and deployment repositories.
+
+What is the Clinical Ingestion Pattern? It is an assemblage of open-source tools and technologies that allows you to take 
+healthcare data, likely in different formats and from different sources, and normalize, process, enhance, and eventually store the 
+data in a consistent manner, making it accessible for further analysis and use (such as advanced data analytics or machine learning). 
+The storage destination in this case is a [FHIR Server](https://ibm.github.io/FHIR/), an industry standard healthcare data storage solution 
+adhering to the [HL7 FHIR specification](https://www.hl7.org/fhir/), making it extremely robust and broadly applicable to all types of data. 
+The pattern is referred to as a reference implementation since it shows one possible configuration for doing realistic work and producing 
+a usable end-product that can be modified or extended as needed.  
+
+So, what can **you do right now**? How about trying out the ingestion pattern? Installing the project into your Kubernetes cluster 
+is straight-forward using the Helm charts provided. Just follow the step-by-step instructions you found in the repository and the previous blog post.  
+
+Once you have installed the pattern, what can you do? Since the pattern is dependent on a logical flow running in a tool known 
+as [NiFi](https://nifi.apache.org/), the best way to get going is to spend a few minutes exploring 
+the [open-source NiFi project](https://nifi.apache.org/). Then, jump in by injecting some data into the flow and watch it proceed through 
+the steps on the "canvas" until it finally ends up safely resting in the FHIR server.
+
+In order to experiment with the pattern, find some data, either in FHIR format or in HL7 format, and provide it to one of the two 
+entry points either via [Kafka](https://kafka.apache.org/) topic or HTTP push with curl or [Postman](https://www.postman.com/). You can find example data as well as an example command here. 
+As noted in the instructions, if you don't have your own data, it is also possible to generate synthetic data using the 
+[Synthea](https://github.com/synthetichealth/synthea). 
+Either way, just follow the directions and you'll be processing data in no time.
+
+Currently, this pattern allows you to ingest and store patient data, validate that the data adheres to the FHIR standards, de-identify a 
+patient by removing identifying information using the [De-Identification project](https://github.com/Alvearie/de-identification), or 
+translate codes to make them consistent with some desired standard. 
+
+As you are working through the instructions and reading about the pattern itself, remember, if you find things that are not clear or 
+if you see a mistake or a need to add an additional step, create an issue. Or, better yet, create a fix and propose contributing 
+it back to the project. Feeling more advanced, perhaps you can think of an additional data enhancement you would like to make, 
+or a change you would like to add to the Clinical Ingestion experience. Don't hesitate to dig into the documentation, 
+learn a bit more about NiFi, and explore the possibilities.
+
+Finally, maybe you have cloud or Kubernetes experience, and perhaps you see additional steps that could be taken to make the install 
+smoother and more robust. Or, you have experience with other cloud platforms and can document steps for installation, 
+where they are similar and where they diverge from those that are provided. If so, add those ideas and instructions to the list. 
+One of the goals of Project Alvearie is to provide resources that can run on many platforms and provide immediate value to the user. 
+This requires a robust implementation and a cloud/platform-agnostic mindset.
+
+These are things **you can do right now**!
+
+### As a software developer
+
+If you are a coder or a tester, beginner or advanced, then Project Alvearie has a number of opportunities that might align 
+with your talents as a software developer.  As described above, reading the overview documentation and installing resources 
+such as the Clinical Ingestion Pattern will provide you with a necessary foundation to propose extensions, new features, 
+and new functionality while at the same time allowing you to contribute back to make the documentation better.
+
+But, what can you do right now? How about bugs? All software applications likely have some bugs that need to be identified and 
+fixed. For Alvearie, these bugs are tracked as issues in the repositories. One of the best ways to get involved, if you are so 
+inclined, is to grab one of these existing issues (or perhaps one that you just created), investigate it, and propose and 
+contribute a fix. Remember, not all bugs are easy (you might want to look for the "good first issue" tag to help identify issues 
+that might be appropriate for getting started). In order to understand the issue, you'll need to be able to reproduce it which 
+will likely mean installing the resource, getting it to run, and then designing test cases that show the issue has been resolved. 
+In the end, you will issue a "pull request" that contains your proposed solution for consideration by the project community.
+
+Not all issues are bugs. Some describe larger features that involve design and discussion with project maintainers. 
+Again, if after using the resource, you have an idea for a new feature, add it as an issue describing what it is, why it would 
+be a good addition, what problem it would solve, and ideas related to the implementation and testing. For example, as a 
+seasoned developer, you might consider the following ideas related to the Clinical Ingestion Pattern:
+
+  - Data currently arrives in either HL7 or FHIR format. Perhaps you have a new type of data and you would like to propose a NiFi processor group that would accept that data and convert it into a FHIR format for storage in the back-end server.
+  - As a follow-on to that idea, you could learn about and propose a custom built NiFi processor capable of carrying out the data transform.
+  - As part of the data enrichment piece of the pipeline, we might want to read "unstructured text" fields and code them according to some standard. Perhaps an existing open-source natural language processing project could be injected into the flow as a module capable of doing the enrichment by producing FHIR-formatted data corresponding to the data hidden in the unstructured text.
+  
+None of these ideas is easy. But they represent the types of advanced features that one might find in a typical 
+open-source project. Features that are challenging to understand, rewarding to develop and deliver, and worthwhile 
+to the community of users. In the end, whether you update documentation, fix a bug, or add a significant feature, 
+you are contributing to the overall success and usefulness of the project.
+
+### And finally...
+
+Using an open-source project can be a great way to get access to tools and applications that support the work of building solutions 
+for problems you are trying to solve. On top of that, contributing to an open-source project like Project Alvearie can be very 
+rewarding, and fun. The activities mentioned above are all things that **you can do right now**!  They range from basic to complex and 
+can make a real difference. Feel free to do any or all of these or come up with your own and add them to our growing list of opportunities. 
+
+<p/>
+<p/>
+<p/>
