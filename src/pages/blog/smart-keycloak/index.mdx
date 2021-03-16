@@ -1,0 +1,42 @@
+---
+title: SMART App Launch with Keycloak and the IBM FHIR Server
+description: SMART App Launch with Keycloak and the IBM FHIR Server
+---
+By Lee Surpreannt &nbsp;&nbsp; | &nbsp;&nbsp; Published March 28, 2021
+
+### Introduction
+The [IBM FHIR Server](https://ibm.github.io/FHIR) implements [HL7 FHIR version 4.0.1 (R4)](https://www.hl7.org/fhir/R4) and supports the 
+FHIR REST API for each resource type defined in the specification.
+
+However, one thing that neither the HL7 FHIR specification nor the IBM FHIR Server prescribe is the security model for this interface.
+Enter SMART on FHIR.
+
+[SMART on FHIR](https://docs.smarthealthit.org) is a collection of specifications that focus on authentication and authorization on top of HL7 FHIR.
+In November of 2018, the Boston Children's Hospital and HL7 published the first of these specifications called the 
+[SMART App Launch Framework](http://www.hl7.org/fhir/smart-app-launch/). This specification extends OAuth 2.0 with `scopes` and `launch context`.
+
+SMART *scopes* are normal OAuth 2.0 scope strings that are used to define an authorization model that is aligned with FHIR resources.
+The specification scopes via a pattern like `<context>/<resourceType>.<permission>`, where
+- *context* is `patient` or `user`;
+- *resourceType* is one of the resource types defined in the HL7 FHIR specification, or `*` to indicate all resource types; and
+- *permission* is `read` or `write`, or `*` for read and write.
+
+SMART *launch context* is what allows a user to launch an application in the context of a given user session or patient record.
+SMART App Launch defines two different launch varieties: one for launching apps from an Electronic Health Record (EHR) system and one for launching "standalone" apps.
+
+In this post, I walk through how to support standalone app launch with the IBM FHIR Server via [Keycloak](https://www.keycloak.org), 
+an open source identity and access management solution.
+
+### Supporting SMART App Launch with Keycloak
+
+### The Alvearie Keycloak Extensions for FHIR
+
+### Configuring the IBM FHIR Server
+
+### Conclusion 
+
+---
+SMART is the registered trademarks of SMART Technologies ULC in the U.S. and/or other countries.
+FHIR® is the registered trademark of HL7 and is used with the permission of HL7. Use of the FHIR trademark does not constitute endorsement of this product by HL7.
+IBM and the IBM logo are trademarks of International Business Machines Corporation, registered in many jurisdictions worldwide.
+Other product and service names might be trademarks of IBM or other companies. A current list of IBM trademarks is available on https://ibm.com/trademark.
