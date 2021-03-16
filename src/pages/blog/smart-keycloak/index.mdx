@@ -59,8 +59,112 @@ To use the extensions:
     ![User-attribute](https://user-images.githubusercontent.com/5478798/111354473-bb27e800-865c-11eb-8432-94e0a647beaa.png)
 
 ### Configuring the IBM FHIR Server
+Now that you have Keycloak configured, its time to hook up the IBM FHIR Server.
+The IBM FHIR Server supports [OpenLiberty configDropins](https://openliberty.io/docs/latest/reference/config/server-configuration-overview.html#server-xml) for configuring server behavior. To configure the server to validate Keycloak-issued tokens, modify `configDropins/disabled/jwtRP.xml` for you Keycloak installation and move it to `configDropins/overrides/`:
+
+```xml
+<server>
+    <!-- Enable features -->
+    <featureManager>
+        <!-- mpJwt-1.1 is already enabled in the default server.xml, but it doesn't hurt to repeat it here -->
+        <feature>mpJwt-1.1</feature>
+    </featureManager>
+
+    <!-- Override the application-bnd binding of the main webapp -->
+    <webApplication contextRoot="fhir-server/api/v4" id="fhir-server-webapp" location="fhir-server.war" name="fhir-server-webapp">
+        <application-bnd id="bind">
+            <security-role id="users" name="FHIRUsers">
+                <group id="usersGroup" access-id="group:https://${env.HOSTNAME}/auth/realms/${env.KEYCLOAK_REALM}/fhirUser"/>
+            </security-role>
+        </application-bnd>
+    </webApplication>
+
+    <!-- This MP JWT configuration validates JWT access tokens and injects them into
+         ResourceScoped beans for inspection. -->
+    <mpJwt id="jwtConsumer"
+           clockSkew="1m"
+           jwksUri="http://keycloak:8080/auth/realms/${env.KEYCLOAK_REALM}/protocol/openid-connect/certs"
+           audiences="https://${env.HOSTNAME}/fhir-server/api/v4"
+           userNameAttribute="sub"
+           groupNameAttribute="group"
+           issuer="https://${env.HOSTNAME}/auth/realms/${env.KEYCLOAK_REALM}"
+           signatureAlgorithm="RS256"
+           authFilterRef="filter"/>
+
+    <authFilter id="filter">
+        <requestUrl urlPattern="/fhir-server" />
+    </authFilter>
+</server>
+```
+
+Additionally, to enforce the SMART scopes passed, the server must be configured with the [fhir-smart](https://bintray.com/ibm-watson-health/ibm-fhir-server-releases/fhir-smart) persistence interceptor (by dropping the jar file into the `userlib` directory of your IBM FHIR Server installation).
+
+Finaly, to advertise the SMART support and make the auth endpoints discoverable, update the `security` section of the `fhir-server-config.json` as described in the [IBM FHIR Server User's Guide](https://ibm.github.io/FHIR/guides/FHIRServerUsersGuide#533-advertise-the-oauth-endpoints-via-fhir-server-config):
+
+```json
+...
+    "security": {
+      "cors": true,
+      "basic": {
+        "enabled": false
+      },
+      "certificates": {
+        "enabled": false,
+        "authFilter": {
+          "enabled": false
+        }
+      },
+      "oauth": {
+        "enabled": true,
+        "regUrl": "https://<host>/auth/realms/${KEYCLOAK_REALM>}/clients-registrations/openid-connect",
+        "authUrl": "https://<host>/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/auth",
+        "tokenUrl": "https://<host>/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token",
+        "smart": {
+          "enabled": true,
+          "scopes": ["openid", "profile", "fhirUser", "launch/patient", "offline_access",
+            "patient/*.read",
+            "patient/AllergyIntolerance.read",
+            "patient/CarePlan.read",
+            "patient/CareTeam.read",
+            "patient/Condition.read",
+            "patient/Device.read",
+            "patient/DiagnosticReport.read",
+            "patient/DocumentReference.read",
+            "patient/Encounter.read",
+            "patient/ExplanationOfBenefit.read",
+            "patient/Goal.read",
+            "patient/Immunization.read",
+            "patient/Location.read",
+            "patient/Medication.read",
+            "patient/MedicationRequest.read",
+            "patient/Observation.read",
+            "patient/Organization.read",
+            "patient/Patient.read",
+            "patient/Practitioner.read",
+            "patient/PractitionerRole.read",
+            "patient/Procedure.read",
+            "patient/Provenance.read",
+            "patient/RelatedPerson.read"
+          ],
+          "capabilities": [
+            "sso-openid-connect",
+            "launch-standalone",
+            "client-public",
+            "client-confidential-symmetric",
+            "permission-offline",
+            "context-standalone-patient",
+            "permission-patient"
+          ]
+        }
+      }
+    },
+...
+```
 
 ### Conclusion 
+In this post, we walked through the OAuth 2.0 extensions defined by SMART App Launch, how to support those extensions via the Alvearie Keycloak Extensions for FHIR, and how to use this project together with the IBM FHIR Server to support SMART App Launch.
+
+SMART App Launch is just one of the specification defined by SMART-on-FHIR and the authentication and authorization challenges in healthcare are immense. We'd love to hear from members of the FHIR community, the SMART-on-FHIR community, and the Keycloak community on the approach outlined here and where you'd like to see us go next. Please connect with us on [chat.fhir.org](https://chat.fhir.org/#narrow/stream/179170-smart/topic/Keycloak.20for.20SMART.20authz), the [Keycloak Extensions for FHIR project](https://github.com/Alvearie/keycloak-extensions-for-fhir), or the [IBM FHIR Server project](https://github.com/ibm/fhir) about how we can take this to the next level.
 
 ---
 SMART is the registered trademarks of SMART Technologies ULC in the U.S. and/or other countries.
