@@ -2,7 +2,7 @@
 title: SMART App Launch with Keycloak and the IBM FHIR Server
 description: SMART App Launch with Keycloak and the IBM FHIR Server
 ---
-By Lee Surpreannt &nbsp;&nbsp; | &nbsp;&nbsp; Published March 23, 2021
+By Lee Surprenant &nbsp;&nbsp; | &nbsp;&nbsp; Published March 23, 2021
 
 ### Background
 The [IBM FHIR Server](https://ibm.github.io/FHIR) implements [HL7 FHIR version 4.0.1 (R4)](https://www.hl7.org/fhir/R4) and supports the 
@@ -47,7 +47,7 @@ The Keycloak extensions for FHIR project currently consists of two components:
 
 To use the extensions:
 1. Build the keycloak-extensions project into a jar file and add it to the [`standalone/deployments`](https://www.keycloak.org/docs/latest/server_development/#packaging-classes-and-deployment-2) directory of your Keycloak installation.
-    - Note: moving forward, we hope to add continuous integration support and publish the built artifacts to Maven Central.
+    - Note: moving forward, we hope to publish the built artifacts to Maven Central.
 3. Configure a realm in your Keycloak installation for SMART App Launch, either manually or via the `keycloak-config` project.
     - In addition to defining all the SMART scopes, the `keycloak-config` automation will create a default group called `fhirUser` (so that all new users will belong to it), and a Group Membership mapper for adding this group to the access token. This group detail is used to map users to a security-role in the IBM FHIR Server (described below).
     ![Group-Membership-mapper](https://user-images.githubusercontent.com/5478798/111356103-68e7c680-865e-11eb-8d0c-1c4315a78634.png)
