@@ -53,7 +53,7 @@ process and distribute large quantities of data. The components for this stage i
 
   - [Health record ingestion](https://alvearie.github.io/HRI/): All incoming data in FHIR and HL7 v2 formats will be sent to HRI where it will be audited, logged, and routed to Nifi for orchestration.
 
-  - **Imaging ingestion**: Imaging data in the form of DICOM will be received by this component.  The images will be persisted in a configured DICOM storage component, and metadata about the images will be passed into Nifi for orchestration.
+  - [Imaging ingestion](https://github.com/Alvearie/imaging-ingestion): Imaging data in the form of DICOM will be received by this component.  The images will be persisted in a configured DICOM storage component, and metadata about the images will be passed into Nifi for orchestration.
 
   - [FHIR ingestion](https://github.com/Alvearie/hri-pipeline-adapters): Some additional transformation of FHIR records will be conducted so that all FHIR records conform to Alvearie's common data model. When the records are in this common format, they can either be stored in a database or transformed further with additional data orchestration components like de-identification or patient and provider matching.
 
@@ -86,8 +86,6 @@ Here are some of the options that will be included:
 
 Alvearie will be able to serve the data to APIs and other applications during this stage. This stage will ultimately be when most 
 external applications connect with Alvearie to retrieve the standardized data. The connections we're planning to build include:
-
-  - [Dcm4che Image Viewer](https://www.dcm4che.org/): Imaging data can be accessed and viewed using an open source viewer from Dcm4che.
 
   - [3scale](https://www.3scale.net/): APIs can connect through this component to deliver data to external applications. 3scale is an open source API gateway supported by Red Hat.
 
