@@ -17,7 +17,7 @@ const AlvearieFooter = () => (
             colLg={6}
             colMd={4}
             colSm={2}>
-		<p> &#169; Copyright 2020, IBM</p>
+		<p> &#169; Copyright 2021, IBM</p>
 	</Column>
 	<Column className={content}
             colLg={6}
