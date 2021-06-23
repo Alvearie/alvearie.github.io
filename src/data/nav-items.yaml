@@ -10,6 +10,9 @@
 - title: Blog
   pages:
     - path: /blog
+- title: Videos
+  pages:
+    - path: /videos
 - title: Get Involved
   pages:
     - path: /contributions
