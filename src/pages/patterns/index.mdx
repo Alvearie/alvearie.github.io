@@ -13,7 +13,7 @@ used to start building your own healthcare solutions using a common base of prov
 <Column colMd={2} colLg={3} noGutterMdLeft>
 <ResourceCard  actionIcon="launch" color="dark" 
       title="Clinical Data Ingestion"
-      href="https://github.com/Alvearie/health-patterns/tree/main/clinical-ingestion">
+      href="https://github.com/Alvearie/health-patterns/tree/main/ingest">
 
 </ResourceCard>
 </Column>
@@ -31,7 +31,7 @@ Within the [NiFi](https://github.com/apache/nifi) canvas, the _Clinical Ingestio
      - In case of errors within the bundle, individual resources are retried
      - Errors are reported back to the data integrator via the kafka topic
 
-Get started using the [clinical data ingestion & enrichment pattern today](https://github.com/Alvearie/health-patterns/tree/main/clinical-ingestion)
+Get started using the [clinical data ingestion pattern today](https://github.com/Alvearie/health-patterns/tree/main/ingest)
 <p/>
 </Column>
 </Row>
@@ -40,7 +40,7 @@ Get started using the [clinical data ingestion & enrichment pattern today](https
 <Column colMd={2} colLg={3} noGutterMdLeft>
 <ResourceCard  actionIcon="launch" color="dark"
       title="Clinical Data Enrichment"
-      href="https://github.com/Alvearie/health-patterns/tree/main/clinical-ingestion">
+      href="https://github.com/Alvearie/health-patterns/tree/main/enrich">
 
 </ResourceCard>
 </Column>
@@ -58,7 +58,7 @@ _Enrichment_ will read FHIR data from a [Kafka](https://kafka.apache.org) topic 
 
 The flexibility of this approach allows the consumer to use enrichment at the appropriate time.  For instance, some of the enrichment could happen at Ingestion time (FHIR Terminology for  instance) prior to storing the data, but after the data is persisted in the FHIR Server, Enrichment can run again to only run NLP and/or an analtyic algorithm.
 
-To get started today, use the [clinical data ingestion & enrichment pattern today](https://github.com/Alvearie/health-patterns/tree/main/clinical-ingestion) but watch this space - the _Enrichment_ pattern will be available separately soon.
+To get started today, use the [clinical data enrichment pattern today](https://github.com/Alvearie/health-patterns/tree/main/enrich)
 
 <p/>
 </Column>
@@ -68,7 +68,7 @@ To get started today, use the [clinical data ingestion & enrichment pattern toda
 <Column colMd={2} colLg={3} noGutterMdLeft>
 <ResourceCard  actionIcon="launch" color="dark"
       title="Quality Measure & Cohorting "
-      href="https://github.com/Alvearie/health-patterns/tree/main/cohort-service">
+      href="https://github.com/Alvearie/health-patterns/tree/main/cohort">
 
 </ResourceCard>
 </Column>
@@ -76,7 +76,7 @@ To get started today, use the [clinical data ingestion & enrichment pattern toda
 
 The _Clinical Data Cohorting_ pattern provides a reference implementation that uses the [quality measure & cohort service](https://github.com/Alvearie/quality-measure-and-cohort-service) to find patients within the FHIR server that match a given cohort as defined using [CQL](https://cql.hl7.org).
 
-Get started using the [cohorting pattern today](https://github.com/Alvearie/health-patterns/tree/main/cohort-service)
+Get started using the [cohorting pattern today](https://github.com/Alvearie/health-patterns/tree/main/cohort)
 
 <p/>
 </Column>
