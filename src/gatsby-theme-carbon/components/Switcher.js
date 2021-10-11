@@ -17,7 +17,7 @@ const CustomSwitcher = (props) => (
       Using Open Source to Build a Healthcare Record Ingestion Pattern
     </SwitcherLink>
 	
-	
+	{/*
     <SwitcherDivider>Contribute</SwitcherDivider>
 	<SwitcherLink {...props}  href="https://alvearie.io/contributions/requestSlackAccess/" >
       Request access to Alvearie Slack 
@@ -25,7 +25,7 @@ const CustomSwitcher = (props) => (
     <SwitcherLink {...props} href="https://alvearie.slack.com/">
       Login to Alvearie Slack
     </SwitcherLink>
-
+  */}
 
 	<SwitcherDivider>Other Links</SwitcherDivider>
 	<SwitcherLink {...props}  href="https://www.ibm.com/watson-health/solutions/healthcare-interoperability" >
